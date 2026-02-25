@@ -1,12 +1,30 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import OverviewScreen from "@/components/OverviewScreen";
+import SessionScreen from "@/components/SessionScreen";
+import CompleteScreen from "@/components/CompleteScreen";
+
+type Screen = "overview" | "session" | "complete";
 
 const Index = () => {
+  const [screen, setScreen] = useState<Screen>("overview");
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="max-w-md mx-auto">
+      {screen === "overview" && (
+        <OverviewScreen onStart={() => setScreen("session")} />
+      )}
+      {screen === "session" && (
+        <SessionScreen
+          onComplete={() => setScreen("complete")}
+          onEnd={() => setScreen("overview")}
+        />
+      )}
+      {screen === "complete" && (
+        <CompleteScreen
+          onRestart={() => setScreen("session")}
+          onBack={() => setScreen("overview")}
+        />
+      )}
     </div>
   );
 };
