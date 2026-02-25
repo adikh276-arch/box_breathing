@@ -1,10 +1,27 @@
 import { ArrowLeft } from "lucide-react";
+import { useTranslated } from "@/contexts/TranslationContext";
 
 interface Props {
   onStart: () => void;
 }
 
 const OverviewScreen = ({ onStart }: Props) => {
+  const t = useTranslated({
+    title: "Relax",
+    aboutLabel: "About This Technique",
+    aboutText:
+      "Box breathing uses a simple 4-4-4-4 pattern — inhale, hold, exhale, hold — each for four seconds. It activates your parasympathetic nervous system, lowering stress and bringing you back to a calm, focused state.",
+    howLabel: "How to Practice",
+    step1: "Inhale for 4 seconds",
+    step2: "Hold for 4 seconds",
+    step3: "Exhale for 4 seconds",
+    step4: "Hold for 4 seconds",
+    step5: "Repeat the cycle",
+    startBtn: "Start Breathing",
+  });
+
+  const steps = [t.step1, t.step2, t.step3, t.step4, t.step5];
+
   return (
     <div className="min-h-screen gradient-calm flex flex-col">
       {/* Header */}
@@ -13,7 +30,7 @@ const OverviewScreen = ({ onStart }: Props) => {
           <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
         <h1 className="flex-1 text-center text-lg font-semibold text-foreground pr-10">
-          Relax
+          {t.title}
         </h1>
       </header>
 
@@ -22,29 +39,23 @@ const OverviewScreen = ({ onStart }: Props) => {
         {/* About Section */}
         <section className="bg-card rounded-lg p-6 shadow-soft mb-5 animate-fade-in">
           <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-3">
-            About This Technique
+            {t.aboutLabel}
           </p>
           <p className="text-secondary-foreground leading-relaxed text-[15px]">
-            Box breathing uses a simple 4-4-4-4 pattern — inhale, hold, exhale,
-            hold — each for four seconds. It activates your parasympathetic
-            nervous system, lowering stress and bringing you back to a calm,
-            focused state.
+            {t.aboutText}
           </p>
         </section>
 
         {/* Steps Section */}
-        <section className="bg-card rounded-lg p-6 shadow-soft animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <section
+          className="bg-card rounded-lg p-6 shadow-soft animate-fade-in"
+          style={{ animationDelay: "0.1s" }}
+        >
           <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-4">
-            How to Practice
+            {t.howLabel}
           </p>
           <ul className="space-y-3">
-            {[
-              "Inhale for 4 seconds",
-              "Hold for 4 seconds",
-              "Exhale for 4 seconds",
-              "Hold for 4 seconds",
-              "Repeat the cycle",
-            ].map((step, i) => (
+            {steps.map((step, i) => (
               <li key={i} className="flex items-center gap-3">
                 <span className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-semibold text-primary">
                   {i + 1}
@@ -63,7 +74,7 @@ const OverviewScreen = ({ onStart }: Props) => {
           onClick={onStart}
           className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-base shadow-button hover:brightness-105 active:scale-[0.98] transition-all duration-200"
         >
-          Start Breathing
+          {t.startBtn}
         </button>
       </div>
     </div>
